@@ -1,18 +1,61 @@
-function makeTransaction(quantity, pricePerDroid) {
-    return `You ordered ${quantity} droids worth ${pricePerDroid} credits!`;
-};
+const themeSwitch = document.querySelector('.theme-switch-input');
+const body = document.querySelector('body');
+const menuOpenButton = document.querySelector('.menu-open-btn');
+const menuCloseButton = document.querySelector('.menu-close-btn');
 
-console.log(makeTransaction(5, 3000)); // "You ordered 5 droids worth 15000 credits!"
-console.log(makeTransaction(3, 1000)); // "You ordered 3 droids worth 3000 credits!"
-console.log(makeTransaction(10, 5000)); // "You ordered 10 droids worth 5000 credits!"
+// Функція для зміни теми та збереження її в локальному сховищі
+function toggleTheme() {
+    if (themeSwitch.checked === false) {
+        body.classList.add('light-theme');
+        body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light'); // Зберігаємо стан теми в локальному сховищі
+    } else {
+        body.classList.remove('light-theme');
+        body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark'); // Зберігаємо стан теми в локальному сховищі
+    }
+}
 
+// Перевірка, яка тема встановлена за замовчуванням
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    themeSwitch.checked = true;
+    toggleTheme();
+} else {
+    themeSwitch.checked = false;
+}
 
-/*
-function makeTransaction(quantity, pricePerDroid) {
-    console.log(`You ordered ${quantity} droids worth ${pricePerDroid} credits!`);
-};
+// Додавання події для перемикання теми
+themeSwitch.addEventListener('change', toggleTheme);
 
-makeTransaction(5, 3000);
-makeTransaction(3, 1000);
-makeTransaction(10, 5000);
-*/
+// функція додавання та видалення класу
+
+  const menu = document.querySelector('.header-menu');
+
+  menu.addEventListener('click', function(event) {
+    if (event.target.matches('.header-menu-link')) {
+
+      const links = menu.querySelectorAll('.header-menu-link');
+      links.forEach(link => {
+        link.classList.remove('exception');
+      });
+
+      event.target.classList.add('exception');
+    }
+  });
+ 
+
+// Відкриття меню при кліку на кнопку відкриття
+  menuOpenButton.addEventListener('click', () => {
+  mobMenu.classList.add('is-open');
+  menuOpenButton.classList.remove('is-open')
+  menuOpenButton.classList.add('hidden');
+  menuCloseButton.classList.remove('hidden');
+});
+
+// Закриття меню при кліку на кнопку закриття
+  menuCloseButton.addEventListener('click', () => {
+  mobMenu.classList.remove('is-open');
+  menuOpenButton.classList.remove('hidden');
+  menuCloseButton.classList.add('hidden');
+});
