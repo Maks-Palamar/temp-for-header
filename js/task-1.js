@@ -58,4 +58,23 @@ themeSwitch.addEventListener('change', toggleTheme);
   mobMenu.classList.remove('is-open');
   menuOpenButton.classList.remove('hidden');
   menuCloseButton.classList.add('hidden');
-});
+  });
+
+  async function loadBooks(category) {
+    try {
+        const response = await fetch(`https://books-backend.p.goit.global/books/category?category=${category}`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to load books');
+        }
+        
+        const data = await response.json();
+
+        console.log(data);
+        displayBooks(data.books);
+    } catch (error) {
+        console.error('Error loading books:', error);
+    }
+};
+
+loadBooks();
